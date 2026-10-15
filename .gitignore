@@ -11,8 +11,7 @@
 /wp-config.php
 .htaccess
 
-# Uploads, caches, third-party code
-/wp-content/uploads/
+# Caches, third-party code (uploads are tracked)
 /wp-content/upgrade/
 /wp-content/cache/
 /wp-content/plugins/
