@@ -1,25 +1,10 @@
-# WordPress core (reinstall with WP-CLI / wordpress.org)
-/wp-admin/
-/wp-includes/
-/index.php
-/license.txt
-/readme.html
-/wp-*.php
-/xmlrpc.php
-
-# Secrets and environment-specific
+# Environment-specific secrets (database credentials, salts)
 /wp-config.php
-.htaccess
 
-# Caches, third-party code (uploads are tracked)
-/wp-content/upgrade/
+# Caches, logs, OS/editor files
 /wp-content/cache/
-/wp-content/plugins/
-/wp-content/themes/twenty*/
-/wp-content/index.php
-/wp-content/languages/
-
-# OS / editor
-.DS_Store
+/wp-content/upgrade/
+/wp-content/debug.log
 *.log
+.DS_Store
 .vscode/
