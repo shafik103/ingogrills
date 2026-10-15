@@ -1,0 +1,26 @@
+# WordPress core (reinstall with WP-CLI / wordpress.org)
+/wp-admin/
+/wp-includes/
+/index.php
+/license.txt
+/readme.html
+/wp-*.php
+/xmlrpc.php
+
+# Secrets and environment-specific
+/wp-config.php
+.htaccess
+
+# Uploads, caches, third-party code
+/wp-content/uploads/
+/wp-content/upgrade/
+/wp-content/cache/
+/wp-content/plugins/
+/wp-content/themes/twenty*/
+/wp-content/index.php
+/wp-content/languages/
+
+# OS / editor
+.DS_Store
+*.log
+.vscode/
