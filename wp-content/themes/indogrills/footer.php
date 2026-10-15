@@ -12,7 +12,7 @@
     <div class="cols">
       <div>
         <img class="flogo" src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/logo-light.svg'); ?>" alt="IndoGrills">
-        <p>Manufacturer of AC grills, diffusers and louvres for residential, commercial and industrial HVAC projects.</p>
+        <p>Manufacturer of AC grills, diffusers and louvers for residential, commercial and industrial HVAC projects.</p>
       </div>
       <div>
         <h4>Quick Links</h4>

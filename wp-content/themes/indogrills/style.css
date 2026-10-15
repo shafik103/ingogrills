@@ -277,3 +277,7 @@ a.ccard:hover{border-color:var(--saffron);box-shadow:0 6px 18px rgba(21,56,95,.1
 .contact-grid h2:after{content:"";position:absolute;left:0;bottom:0;width:44px;height:4px;border-radius:2px;background:var(--saffron)}
 .ccard{box-shadow:0 2px 10px rgba(21,56,95,.05);transition:box-shadow .2s,border-color .2s}
 @media(max-width:1000px){.cform .form{grid-template-rows:none}.cform .form label:nth-of-type(6) textarea{min-height:160px}}
+
+/* pages (About etc.): same width and side padding as Contact */
+.content .wrap.wide{max-width:1500px;margin-left:auto;margin-right:auto;padding-left:40px;padding-right:40px}
+@media(max-width:700px){.content .wrap.wide,.page-head .wrap.wide{padding-left:20px;padding-right:20px}}

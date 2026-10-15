@@ -7,7 +7,7 @@ $prod = esc_url(get_post_type_archive_link('product'));
     <div>
       <span class="eyebrow">Air Distribution Products Manufacturer</span>
       <h1>Precision-made <span>AC Grills</span> for every HVAC project</h1>
-      <p>Return air grills, supply grills, diffusers and louvres, manufactured in custom sizes and finishes for HVAC contractors, consultants and distributors.</p>
+      <p>Return air grills, supply grills, diffusers and louvers, manufactured in custom sizes and finishes for HVAC contractors, consultants and distributors.</p>
       <a class="btn" href="<?php echo $contact; ?>">Request a Quote</a>
       <a class="btn alt" href="<?php echo $prod; ?>">Browse Products</a>
     </div>
@@ -42,7 +42,7 @@ $prod = esc_url(get_post_type_archive_link('product'));
     <div class="intro-panel">
       <h3>Product Range at a Glance</h3>
       <table class="specs">
-        <tr><th>Products</th><td>Return &amp; supply grills, diffusers, louvres</td></tr>
+        <tr><th>Products</th><td>Return &amp; supply grills, diffusers, louvers</td></tr>
         <tr><th>Materials</th><td>Aluminium, GI, MS</td></tr>
         <tr><th>Finishes</th><td>Powder coat, anodised, mill finish</td></tr>
         <tr><th>Sizes</th><td>Standard and fully custom</td></tr>

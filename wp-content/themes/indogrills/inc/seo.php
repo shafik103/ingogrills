@@ -78,9 +78,9 @@ add_filter('pre_get_document_title', function ($t) {
 });
 
 function ig_meta_description() {
-    if (is_front_page()) return 'IndoGrills is a Mumbai manufacturer of AC grills, diffusers, dampers, disk valves and louvres with 10+ years of experience. Custom sizes, bulk supply. Get a quote.';
+    if (is_front_page()) return 'IndoGrills: Mumbai manufacturer of AC grills, diffusers, dampers, disk valves and louvers (louvres). 10+ years experience. Custom sizes. Get a quote.';
     if (is_singular('product')) return ig_product_desc(get_queried_object_id());
-    if (is_post_type_archive('product')) return 'Browse 50+ HVAC air distribution products from IndoGrills, Mumbai: AC grills, diffusers, dampers, disk valves, jet nozzles and louvres made to your size.';
+    if (is_post_type_archive('product')) return 'Browse 50+ HVAC air distribution products from IndoGrills, Mumbai: AC grills, diffusers, dampers, disk valves, jet nozzles and louvers made to your size.';
     if (is_tax('product_cat')) {
         $o = get_queried_object();
         $first = preg_split('/(?<=\.)\s/', indogrills_category_blurb($o->name))[0];

@@ -122,7 +122,7 @@ function indogrills_placeholder($cat = '') {
             $s .= '<circle cx="60" cy="60" r="46"/><circle cx="60" cy="60" r="26" stroke="#FF9733"/><circle cx="60" cy="60" r="6" fill="#15385F"/>'; break;
         case 'Jet Nozzles':
             $s .= '<circle cx="60" cy="60" r="46"/><circle cx="60" cy="60" r="28"/><path d="M60 14v18M60 88v18M14 60h18M88 60h18" stroke="#FF9733"/>'; break;
-        case 'Louvres':
+        case 'Louvers':
             $s .= '<rect x="14" y="14" width="92" height="92" rx="6"/><path d="M26 34 L94 28M26 52 L94 46M26 70 L94 64M26 88 L94 82" stroke="#FF9733"/>'; break;
         case 'Accessories & Specials':
             $s .= '<circle cx="60" cy="60" r="16" stroke="#FF9733"/><path d="M60 14v18M60 88v18M14 60h18M88 60h18M27 27l13 13M80 80l13 13M93 27L80 40M40 80L27 93"/>'; break;
@@ -147,7 +147,7 @@ function indogrills_category_blurb($name) {
         'Dampers' => 'Dampers regulate or shut off airflow inside ducting so the system can be balanced and controlled. Manual, gravity and motorised options are available for different duct sizes and shapes.',
         'Disk Valves' => 'Disk valves are adjustable ventilation valves for exhaust in toilets and kitchens. The centre disk is turned to set the airflow.',
         'Jet Nozzles' => 'Jet nozzles deliver air over long throws, which suits large halls, atriums and high-ceiling spaces. Adjustable sizes are available.',
-        'Louvres' => 'Louvres allow ventilation and air intake or exhaust while keeping out weather and debris. Used on walls, plant rooms and building facades.',
+        'Louvers' => 'Louvers allow ventilation and air intake or exhaust while keeping out weather and debris. Used on walls, plant rooms and building facades.',
     ];
     return $b[$name] ?? 'Manufactured to your specification. Contact us with your size, material and finish requirements.';
 }
@@ -222,7 +222,7 @@ function indogrills_category_apps($name) {
         'Dampers' => ['Balancing airflow in supply and return ducts', 'Isolating duct branches for maintenance', 'Automated control with motorised actuators'],
         'Disk Valves' => ['Toilet and bathroom exhaust', 'Kitchens and pantries', 'Small rooms needing adjustable ventilation'],
         'Jet Nozzles' => ['Auditoriums, atriums and large halls', 'Showrooms and high-ceiling spaces', 'Spot cooling in industrial areas'],
-        'Louvres' => ['Plant rooms and generator rooms', 'External walls and building facades', 'Fresh-air intake and exhaust openings'],
+        'Louvers' => ['Plant rooms and generator rooms', 'External walls and building facades', 'Fresh-air intake and exhaust openings'],
     ];
     return $a[$name] ?? ['HVAC and ventilation projects', 'Residential, commercial and industrial buildings', 'Custom requirements on request'];
 }
