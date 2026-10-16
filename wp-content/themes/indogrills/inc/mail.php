@@ -21,7 +21,7 @@ if (!defined('ABSPATH')) exit;
  */
 
 add_filter('wp_mail_from', fn($f) => indogrills_contact_email());
-add_filter('wp_mail_from_name', fn($n) => 'IndoGrills Website');
+add_filter('wp_mail_from_name', fn($n) => 'IndoGrills Enquiries');
 
 add_action('phpmailer_init', function ($m) {
     if (!defined('IG_SMTP_HOST') || !defined('IG_SMTP_PASS')) return;
@@ -33,11 +33,13 @@ add_action('phpmailer_init', function ($m) {
     $m->Username   = defined('IG_SMTP_USER') ? IG_SMTP_USER : indogrills_contact_email();
     $m->Password   = IG_SMTP_PASS;
     $m->From       = indogrills_contact_email();
-    $m->FromName   = 'IndoGrills Website';
+    $m->FromName   = 'IndoGrills Enquiries';
     $m->CharSet    = 'UTF-8';
 });
 
+$GLOBALS['ig_mail_error'] = '';
 add_action('wp_mail_failed', function ($err) {
+    $GLOBALS['ig_mail_error'] = $err->get_error_message();
     error_log('IndoGrills mail failed: ' . $err->get_error_message());
 });
 
@@ -49,7 +51,7 @@ add_action('admin_menu', function () {
             $to = sanitize_email($_POST['to'] ?? '') ?: indogrills_contact_email();
             $ok = wp_mail($to, 'IndoGrills test email', "This is a test email from " . home_url() . "\nSent: " . current_time('mysql'));
             echo $ok ? '<div class="notice notice-success"><p>Sent to ' . esc_html($to) . '. Check the inbox (and spam).</p></div>'
-                     : '<div class="notice notice-error"><p>Sending failed. Check the SMTP settings in wp-config.php and the server error log.</p></div>';
+                     : '<div class="notice notice-error"><p>Sending failed.</p><p><strong>Reason:</strong> <code>' . esc_html($GLOBALS['ig_mail_error'] ?: 'unknown (see the server error log)') . '</code></p></div>';
         }
         $on = defined('IG_SMTP_HOST') && defined('IG_SMTP_PASS');
         echo '<p>SMTP: <strong>' . ($on ? 'configured (' . esc_html(IG_SMTP_HOST) . ')' : 'not configured - using PHP mail()') . '</strong></p>';

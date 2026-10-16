@@ -86,7 +86,26 @@ function indogrills_handle_enquiry() {
     }
     $body = "Name: $name\nCompany: $company\nEmail: $email\nPhone: $phone\nProduct: $product\n\n$msg";
     wp_insert_post(['post_type' => 'enquiry', 'post_status' => 'publish', 'post_title' => "$name - " . ($product ?: 'General'), 'post_content' => $body]);
-    wp_mail(indogrills_contact_email(), "New enquiry from $name", $body, ["Reply-To: $name <$email>"]);
+    $subject = "\u{1F514} New Quote Request" . ($product ? ': ' . $product : '') . ' - ' . $name . ($company ? " ($company)" : '');
+    $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
+    $row = function ($k, $v, $link = '') {
+        if ($v === '') return '';
+        $v = esc_html($v);
+        if ($link) $v = '<a href="' . esc_attr($link) . '" style="color:#15385F;font-weight:700;text-decoration:none">' . $v . '</a>';
+        return '<tr><td style="padding:10px 14px;background:#F3F6FA;color:#44546A;font-size:12px;text-transform:uppercase;letter-spacing:.06em;width:130px;border-bottom:1px solid #E1E6ED">' . $k . '</td><td style="padding:10px 14px;color:#1d2733;font-size:15px;border-bottom:1px solid #E1E6ED">' . $v . '</td></tr>';
+    };
+    $html = '<div style="background:#eef2f7;padding:24px 12px;font-family:Helvetica,Arial,sans-serif">'
+      . '<table role="presentation" width="100%" style="max-width:600px;margin:0 auto;background:#fff;border-radius:10px;overflow:hidden;border-collapse:collapse">'
+      . '<tr><td style="background:#15385F;padding:18px 22px;color:#fff;font-size:20px;font-weight:800">INDO<span style="color:#FF9733">GRILLS</span></td></tr>'
+      . '<tr><td style="background:#FF9733;padding:12px 22px;color:#15385F;font-size:16px;font-weight:800">New Quote Request' . ($product ? ' &middot; ' . esc_html($product) : '') . '</td></tr>'
+      . '<tr><td style="padding:0"><table role="presentation" width="100%" style="border-collapse:collapse">'
+      . $row('Name', $name) . $row('Company', $company) . $row('Email', $email, 'mailto:' . $email) . $row('Phone', $phone, $phone ? 'tel:' . preg_replace('/[^0-9+]/', '', $phone) : '') . $row('Product', $product)
+      . '</table></td></tr>'
+      . '<tr><td style="padding:18px 22px"><div style="font-size:12px;color:#44546A;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Message</div>'
+      . '<div style="font-size:15px;line-height:1.55;color:#1d2733;white-space:pre-wrap">' . esc_html($msg) . '</div></td></tr>'
+      . '<tr><td style="padding:14px 22px;background:#F3F6FA;color:#44546A;font-size:12px">Reply to this email to answer ' . esc_html($name) . ' directly. Sent from ' . esc_html(home_url()) . '</td></tr>'
+      . '</table></div>';
+    wp_mail(indogrills_contact_email(), $subject, $html, ['Content-Type: text/html; charset=UTF-8', 'Reply-To: ' . $name . ' <' . $email . '>']);
     wp_safe_redirect(add_query_arg('enquiry', 'sent', $back)); exit;
 }
 add_action('admin_post_nopriv_ig_enquiry', 'indogrills_handle_enquiry');
