@@ -81,10 +81,10 @@ function indogrills_handle_enquiry() {
     $company = sanitize_text_field($_POST['company'] ?? '');
     $product = sanitize_text_field($_POST['product'] ?? '');
     $msg = sanitize_textarea_field($_POST['message'] ?? '');
-    if (!$name || !is_email($email) || !$msg) {
+    if (!$name || !$msg || strlen(preg_replace('/\D/', '', $phone)) < 7 || ($email !== '' && !is_email($email))) {
         wp_safe_redirect(add_query_arg('enquiry', 'error', $back)); exit;
     }
-    $body = "Name: $name\nCompany: $company\nEmail: $email\nPhone: $phone\nProduct: $product\n\n$msg";
+    $body = "Name: $name\nCompany: $company\nPhone: $phone\nEmail: " . ($email ?: '(not given)') . "\nProduct: $product\n\n$msg";
     wp_insert_post(['post_type' => 'enquiry', 'post_status' => 'publish', 'post_title' => "$name - " . ($product ?: 'General'), 'post_content' => $body]);
     $subject = "\u{1F514} New Quote Request" . ($product ? ': ' . $product : '') . ' - ' . $name . ($company ? " ($company)" : '');
     $subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
@@ -99,13 +99,13 @@ function indogrills_handle_enquiry() {
       . '<tr><td style="background:#15385F;padding:18px 22px;color:#fff;font-size:20px;font-weight:800">INDO<span style="color:#FF9733">GRILLS</span></td></tr>'
       . '<tr><td style="background:#FF9733;padding:12px 22px;color:#15385F;font-size:16px;font-weight:800">New Quote Request' . ($product ? ' &middot; ' . esc_html($product) : '') . '</td></tr>'
       . '<tr><td style="padding:0"><table role="presentation" width="100%" style="border-collapse:collapse">'
-      . $row('Name', $name) . $row('Company', $company) . $row('Email', $email, 'mailto:' . $email) . $row('Phone', $phone, $phone ? 'tel:' . preg_replace('/[^0-9+]/', '', $phone) : '') . $row('Product', $product)
+      . $row('Name', $name) . $row('Company', $company) . $row('Phone', $phone, 'tel:' . preg_replace('/[^0-9+]/', '', $phone)) . $row('Email', $email, $email ? 'mailto:' . $email : '') . $row('Product', $product)
       . '</table></td></tr>'
       . '<tr><td style="padding:18px 22px"><div style="font-size:12px;color:#44546A;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Message</div>'
       . '<div style="font-size:15px;line-height:1.55;color:#1d2733;white-space:pre-wrap">' . esc_html($msg) . '</div></td></tr>'
-      . '<tr><td style="padding:14px 22px;background:#F3F6FA;color:#44546A;font-size:12px">Reply to this email to answer ' . esc_html($name) . ' directly. Sent from ' . esc_html(home_url()) . '</td></tr>'
+      . '<tr><td style="padding:14px 22px;background:#F3F6FA;color:#44546A;font-size:12px">' . ($email ? 'Reply to this email to answer ' . esc_html($name) . ' directly.' : 'No email given: call ' . esc_html($phone) . ' to reply.') . ' Sent from ' . esc_html(home_url()) . '</td></tr>'
       . '</table></div>';
-    wp_mail(indogrills_contact_email(), $subject, $html, ['Content-Type: text/html; charset=UTF-8', 'Reply-To: ' . $name . ' <' . $email . '>']);
+    wp_mail(indogrills_contact_email(), $subject, $html, array_filter(['Content-Type: text/html; charset=UTF-8', $email ? 'Reply-To: ' . $name . ' <' . $email . '>' : '']));
     wp_safe_redirect(add_query_arg('enquiry', 'sent', $back)); exit;
 }
 add_action('admin_post_nopriv_ig_enquiry', 'indogrills_handle_enquiry');
@@ -114,7 +114,7 @@ add_action('admin_post_ig_enquiry', 'indogrills_handle_enquiry');
 function indogrills_enquiry_form($product = '') {
     $s = $_GET['enquiry'] ?? '';
     if ($s === 'sent') echo '<div class="notice ok">Thank you! Your enquiry has been sent. We will contact you shortly.</div>';
-    if ($s === 'error') echo '<div class="notice err">Please fill in your name, a valid email and a message.</div>';
+    if ($s === 'error') echo '<div class="notice err">Please fill in your name, a valid phone number and your requirements. If you add an email it must be valid.</div>';
     ?>
     <form class="form" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
         <input type="hidden" name="action" value="ig_enquiry">
@@ -122,8 +122,8 @@ function indogrills_enquiry_form($product = '') {
         <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
         <label>Name *<input name="name" required></label>
         <label>Company<input name="company"></label>
-        <label>Email *<input type="email" name="email" required></label>
-        <label>Phone<input name="phone"></label>
+        <label>Phone *<input type="tel" name="phone" inputmode="tel" required></label>
+        <label>Email (optional)<input type="email" name="email"></label>
         <label>Product of interest<input name="product" value="<?php echo esc_attr($product); ?>"></label>
         <label>Requirements (sizes, quantity, finish) *<textarea name="message" rows="5" required></textarea></label>
         <p><button class="btn" type="submit">Request a Quote</button></p>
