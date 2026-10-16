@@ -2,6 +2,7 @@
 if (!defined('ABSPATH')) exit;
 require_once get_template_directory() . '/inc/seo.php';
 require_once get_template_directory() . '/inc/mail.php';
+require_once get_template_directory() . '/inc/sitemap.php';
 
 add_action('after_setup_theme', function () {
     add_theme_support('title-tag');
