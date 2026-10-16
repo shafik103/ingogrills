@@ -11,7 +11,7 @@
   <div class="wrap">
     <span>Manufacturer of AC Grills &amp; Air Distribution Products</span>
     <span class="tb-links">
-      <a href="mailto:<?php echo esc_attr(get_option('admin_email')); ?>"><?php echo indogrills_icon('mail'); ?><?php echo esc_html(get_option('admin_email')); ?></a>
+      <a href="mailto:<?php echo esc_attr(indogrills_contact_email()); ?>"><?php echo indogrills_icon('mail'); ?><?php echo esc_html(indogrills_contact_email()); ?></a>
       <a href="tel:+919175694563"><?php echo indogrills_icon('phone'); ?>+91 91756 94563</a>
     </span>
   </div>

@@ -28,7 +28,7 @@
       <div>
         <h4>Contact</h4>
         <ul class="fcontact">
-          <li><?php echo indogrills_icon('mail'); ?><a href="mailto:<?php echo esc_attr(get_option('admin_email')); ?>"><?php echo esc_html(get_option('admin_email')); ?></a></li>
+          <li><?php echo indogrills_icon('mail'); ?><a href="mailto:<?php echo esc_attr(indogrills_contact_email()); ?>"><?php echo esc_html(indogrills_contact_email()); ?></a></li>
           <li><?php echo indogrills_icon('phone'); ?><a href="tel:+919175694563">+91 91756 94563</a></li>
           <li><?php echo indogrills_icon('pin'); ?><span>Mumbai, Maharashtra, India</span></li>
         </ul>

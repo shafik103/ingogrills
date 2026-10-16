@@ -110,7 +110,7 @@ function ig_org() {
         'image' => get_template_directory_uri() . '/assets/img/IndoGrills-Horizontal.svg',
         'description' => 'Manufacturer of AC grills, diffusers, dampers and other HVAC air distribution products in Mumbai.',
         'telephone' => IG_PHONE,
-        'email' => get_option('admin_email'),
+        'email' => indogrills_contact_email(),
         'address' => ['@type' => 'PostalAddress', 'addressLocality' => 'Mumbai', 'addressRegion' => 'Maharashtra', 'addressCountry' => 'IN'],
         'areaServed' => ['Mumbai', 'Navi Mumbai', 'Thane', 'Maharashtra', 'India'],
     ];

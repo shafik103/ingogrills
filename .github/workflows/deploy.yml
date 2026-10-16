@@ -1,0 +1,40 @@
+# Deploys to the cPanel hosting every time you push to main.
+# Needs 4 repository secrets (GitHub > Settings > Secrets and variables > Actions):
+#   FTP_HOST, FTP_USER, FTP_PASSWORD, FTP_DIR   (see README-DEPLOY.md)
+name: Deploy to cPanel
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:        # also lets you run it by hand from the Actions tab
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Upload changed files over FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ${{ secrets.FTP_DIR }}
+          protocol: ftps
+          # Never overwrite live config/secrets or upload repo-only files
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .github/**
+            database/**
+            wp-config.php
+            README-DEPLOY.md
+            wp-content/IndoGrills-Visiting-Card/**
+            wp-content/IndoGrills-Catalogue/**
+            **/.DS_Store
+            **/node_modules/**

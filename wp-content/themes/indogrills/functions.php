@@ -1,6 +1,7 @@
 <?php
 if (!defined('ABSPATH')) exit;
 require_once get_template_directory() . '/inc/seo.php';
+require_once get_template_directory() . '/inc/mail.php';
 
 add_action('after_setup_theme', function () {
     add_theme_support('title-tag');
@@ -85,7 +86,7 @@ function indogrills_handle_enquiry() {
     }
     $body = "Name: $name\nCompany: $company\nEmail: $email\nPhone: $phone\nProduct: $product\n\n$msg";
     wp_insert_post(['post_type' => 'enquiry', 'post_status' => 'publish', 'post_title' => "$name - " . ($product ?: 'General'), 'post_content' => $body]);
-    wp_mail(get_option('admin_email'), "New enquiry from $name", $body, ["Reply-To: $name <$email>"]);
+    wp_mail(indogrills_contact_email(), "New enquiry from $name", $body, ["Reply-To: $name <$email>"]);
     wp_safe_redirect(add_query_arg('enquiry', 'sent', $back)); exit;
 }
 add_action('admin_post_nopriv_ig_enquiry', 'indogrills_handle_enquiry');
@@ -226,3 +227,6 @@ function indogrills_category_apps($name) {
     ];
     return $a[$name] ?? ['HVAC and ventilation projects', 'Residential, commercial and industrial buildings', 'Custom requirements on request'];
 }
+
+/* Public contact email: shown on the site and used for enquiry notifications. */
+function indogrills_contact_email() { return 'info@indogrills.com'; }
